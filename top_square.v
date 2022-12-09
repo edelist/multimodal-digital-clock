@@ -21,8 +21,13 @@
 module top_square(
     input wire CLK,             // board clock: 100 MHz on Arty/Basys3/Nexys
     input wire RST_BTN,
-    input wire [7:0] random_num,
-    input wire [7:0] hit,         
+    input wire [6:0] h1,
+    input wire [6:0] h2,
+    input wire [6:0] m1,
+    input wire [6:0] m2,
+    input wire [6:0] s1,
+    input wire [6:0] s2,
+    input wire [6:0] ap,
     output wire VGA_HS_O,       // horizontal sync output
     output wire VGA_VS_O,       // vertical sync output
     output wire [3:0] VGA_R,    // 4-bit VGA red output
@@ -96,6 +101,7 @@ module top_square(
         M1_0, M1_1, M1_2, M1_3, M1_4, M1_5, M1_6, M2_0, M2_1, M2_2, M2_3, M2_4, M2_5, M2_6, 
         S1_0, S1_1, S1_2, S1_3, S1_4, S1_5, S1_6, S2_0, S2_1, S2_2, S2_3, S2_4, S2_5, S2_6; 
     wire colonHM_1, colonHM_2, colonMS_1, colonMS_2; //add ms functionality if necessary
+    wire A_P0, A_P1, A_P2, A_P3, A_P4, A_P5, A_P6;
     //HOUR 1 DIGIT
     assign H1_0 = ((x > 75) & (y > 260) & (x < 105) & (y < 275)) ? 1 : 0;
     assign H1_1 = ((x > 105) & (y > 230) & (x < 120) & (y < 260)) ? 1 : 0;
@@ -153,6 +159,13 @@ module top_square(
     assign S2_5 = ((x > 555) & (y > 230) & (x < 570) & (y < 260)) ? 1 : 0;
     assign S2_6 = ((x > 570) & (y > 222) & (x < 600) & (y < 238)) ? 1 : 0;
 
+    assign A_P0 = ((x > 570) & (y > 160) & (x < 600) & (y < 175)) ? 1 : 0;
+    assign A_P1 = ((x > 600) & (y > 130) & (x < 615) & (y < 160)) ? 1 : 0;
+    assign A_P2 = ((x > 600) & (y > 100) & (x < 615) & (y < 130)) ? 1 : 0;
+    assign A_P3 = ((x > 570) & (y > 85) & (x < 600) & (y < 100)) ? 1 : 0; //added 75 to S1 x-locations
+    assign A_P4 = ((x > 555) & (y > 100) & (x < 570) & (y < 130)) ? 1 : 0;
+    assign A_P5 = ((x > 555) & (y > 130) & (x < 570) & (y < 160)) ? 1 : 0;
+    assign A_P6 = ((x > 570) & (y > 122) & (x < 600) & (y < 138)) ? 1 : 0;
 
  // Assign the registers to the VGA 3rd output. This will display strong red on the Screen when 
  // grid = 1, and strong green on the screen when green = 1;
@@ -166,8 +179,154 @@ module top_square(
 	//Green = 0 means that there will be no values of x/y on the VGA that will display green
     green = 0;
 	//This statement makes it so that within SQ1, a 3x3 grid of squares appears, with the middle square blacked out
-    grid = SQ1 + H1_0+H1_1+H1_2+H1_3+H1_4+H1_5+H1_6+H2_0+H2_1+H2_2+H2_3+H2_4+H2_5+H2_6+M1_0+M1_1+M1_2+M1_3+M1_4+M1_5+M1_6+M2_0+M2_1+M2_2+M2_3+M2_4+M2_5+M2_6+S1_0+S1_1+S1_2+S1_3+S1_4+S1_5+S1_6+S2_0+S2_1+S2_2+S2_3+S2_4+S2_5+S2_6+colonHM_1+colonHM_2+colonMS_1+colonMS_2;
-    
+    grid = SQ1 /*+ H1_0+H1_1+H1_2+H1_3+H1_4+H1_5+H1_6+H2_0+H2_1+H2_2+H2_3+H2_4+H2_5+H2_6+M1_0+M1_1+M1_2+M1_3+M1_4+M1_5+M1_6+M2_0+M2_1+M2_2+M2_3+M2_4+M2_5+M2_6+S1_0+S1_1+S1_2+S1_3+S1_4+S1_5+S1_6+S2_0+S2_1+S2_2+S2_3+S2_4+S2_5+S2_6*/+colonHM_1+colonHM_2+colonMS_1+colonMS_2;
+    if(h1[0] == 0) begin
+        grid = grid + H1_0;
+    end
+    if(h1[1] == 0) begin
+        grid = grid + H1_1;
+    end
+    if(h1[2] == 0) begin
+        grid = grid + H1_2;
+    end
+    if(h1[3] == 0) begin
+        grid = grid + H1_3;
+    end
+    if(h1[4] == 0) begin
+        grid = grid + H1_4;
+    end
+    if(h1[5] == 0) begin
+        grid = grid + H1_5;
+    end
+    if(h1[6] == 0) begin
+        grid = grid + H1_6;
+    end
+    if(h2[0] == 0) begin
+        grid = grid + H2_0;
+    end
+    if(h2[1] == 0) begin
+        grid = grid + H2_1;
+    end
+    if(h2[2] == 0) begin
+        grid = grid + H2_2;
+    end
+    if(h2[3] == 0) begin
+        grid = grid + H2_3;
+    end
+    if(h2[4] == 0) begin
+        grid = grid + H2_4;
+    end
+    if(h2[5] == 0) begin
+        grid = grid + H2_5;
+    end
+    if(h2[6] == 0) begin
+        grid = grid + H2_6;
+    end
+    if(m1[0] == 0) begin
+        grid = grid + M1_0;
+    end
+    if(m1[1] == 0) begin
+        grid = grid + M1_1;
+    end
+    if(m1[2] == 0) begin
+        grid = grid + M1_2;
+    end
+    if(m1[3] == 0) begin
+        grid = grid + M1_3;
+    end
+    if(m1[4] == 0) begin
+        grid = grid + M1_4;
+    end
+    if(m1[5] == 0) begin
+        grid = grid + M1_5;
+    end
+    if(m1[6] == 0) begin
+        grid = grid + M1_6;
+    end
+    if(m2[0] == 0) begin
+        grid = grid + M2_0;
+    end
+    if(m2[1] == 0) begin
+        grid = grid + M2_1;
+    end
+    if(m2[2] == 0) begin
+        grid = grid + M2_2;
+    end
+    if(m2[3] == 0) begin
+        grid = grid + M2_3;
+    end
+    if(m2[4] == 0) begin
+        grid = grid + M2_4;
+    end
+    if(m2[5] == 0) begin
+        grid = grid + M2_5;
+    end
+    if(m2[6] == 0) begin
+        grid = grid + M2_6;
+    end
+    if(s1[0] == 0) begin
+        grid = grid + S1_0;
+    end
+    if(s1[1] == 0) begin
+        grid = grid + S1_1;
+    end
+    if(s1[2] == 0) begin
+        grid = grid + S1_2;
+    end
+    if(s1[3] == 0) begin
+        grid = grid + S1_3;
+    end
+    if(s1[4] == 0) begin
+        grid = grid + S1_4;
+    end
+    if(s1[5] == 0) begin
+        grid = grid + S1_5;
+    end
+    if(s1[6] == 0) begin
+        grid = grid + S1_6;
+    end
+    if(s2[0] == 0) begin
+        grid = grid + S2_0;
+    end
+    if(s2[1] == 0) begin
+        grid = grid + S2_1;
+    end
+    if(s2[2] == 0) begin
+        grid = grid + S2_2;
+    end
+    if(s2[3] == 0) begin
+        grid = grid + S2_3;
+    end
+    if(s2[4] == 0) begin
+        grid = grid + S2_4;
+    end
+    if(s2[5] == 0) begin
+        grid = grid + S2_5;
+    end
+    if(s2[6] == 0) begin
+        grid = grid + S2_6;
+    end
+    if(ap[0] == 0) begin
+        grid = grid + A_P0;
+    end
+    if(ap[1] == 0) begin
+        grid = grid + A_P1;
+    end
+    if(ap[2] == 0) begin
+        grid = grid + A_P2;
+    end
+    if(ap[3] == 0) begin
+        grid = grid + A_P3;
+    end
+    if(ap[4] == 0) begin
+        grid = grid + A_P4;
+    end
+    if(ap[5] == 0) begin
+        grid = grid + A_P5;
+    end
+    if(ap[6] == 0) begin
+        grid = grid + A_P6;
+    end
 //    if(random_num[0] == 1)
 //        begin
 //			//Add SQ10 to the areas which will display strong green.
