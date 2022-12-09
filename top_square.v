@@ -53,56 +53,57 @@ module top_square(
     );
 
     // Wires to hold regions on FPGA
-    wire SQ1,SQ2,SQ3,SQ4,SQ5,SQ6,SQ7,SQ8,SQ9,SQ10,SQ11,SQ12,SQ13,SQ14,SQ15,SQ16,SQ17,SQMid,SQ10hit,SQ11hit,SQ12hit,SQ13hit,SQ14hit,SQ15hit,SQ16hit,SQ17hit;
+    wire SQ1;
+    //,SQ2,SQ3,SQ4,SQ5,SQ6,SQ7,SQ8,SQ9,SQ10,SQ11,SQ12,SQ13,SQ14,SQ15,SQ16,SQ17,SQMid,SQ10hit,SQ11hit,SQ12hit,SQ13hit,SQ14hit,SQ15hit,SQ16hit,SQ17hit;
 	
-    //Registers for entities
+//    //Registers for entities
 	reg green,grid;
 	
-	// Creating Regions on the VGA Display represented as wires (640x480)
+//	// Creating Regions on the VGA Display represented as wires (640x480)
 	
-	// SQ1 is a large Square, and SQ2-9, along with SQ Mid are areas within SQ1
-    assign SQ1 = ((x > 100) & (y > 60) & (x < 540) & (y < 420)) ? 1 : 0;
-    assign SQ2 = ((x > 180) & (y > 60) & (x < 280) & (y < 420)) ? 1 : 0; 
-    assign SQ3 = ((x > 360) & (y > 60) & (x < 460) & (y < 420)) ? 1 : 0; 
-    assign SQ4 = ((x > 100) & (y > 279) & (x < 181) & (y < 341)) ? 1 : 0; // Red Square
-    assign SQ5 = ((x > 100) & (y > 139) & (x < 181) & (y < 201)) ? 1 : 0; // Red Square
-    assign SQ6 = ((x > 279) & (y > 279) & (x < 361) & (y < 341)) ? 1 : 0; // Red Square
-    assign SQ7 = ((x > 279) & (y > 139) & (x < 361) & (y < 201)) ? 1 : 0; // Red Square
-    assign SQ8 = ((x > 459) & (y > 279) & (x < 540) & (y < 341)) ? 1 : 0; // Red Square
-    assign SQ9 = ((x > 459) & (y > 139) & (x < 540) & (y < 201)) ? 1 : 0; // Red Square
-    assign SQMid = ((x > 279) & (y > 200) & (x < 361) & (y < 280)) ? 1 : 0; // Center Square
+//	// SQ1 is a large Square, and SQ2-9, along with SQ Mid are areas within SQ1
+    assign SQ1 = ((x > -1) & (y > -1) & (x < 641) & (y < 481)) ? 1 : 0;
+//    assign SQ2 = ((x > 180) & (y > 60) & (x < 280) & (y < 420)) ? 1 : 0; 
+//    assign SQ3 = ((x > 360) & (y > 60) & (x < 460) & (y < 420)) ? 1 : 0; 
+//    assign SQ4 = ((x > 100) & (y > 279) & (x < 181) & (y < 341)) ? 1 : 0; // Red Square
+//    assign SQ5 = ((x > 100) & (y > 139) & (x < 181) & (y < 201)) ? 1 : 0; // Red Square
+//    assign SQ6 = ((x > 279) & (y > 279) & (x < 361) & (y < 341)) ? 1 : 0; // Red Square
+//    assign SQ7 = ((x > 279) & (y > 139) & (x < 361) & (y < 201)) ? 1 : 0; // Red Square
+//    assign SQ8 = ((x > 459) & (y > 279) & (x < 540) & (y < 341)) ? 1 : 0; // Red Square
+//    assign SQ9 = ((x > 459) & (y > 139) & (x < 540) & (y < 201)) ? 1 : 0; // Red Square
+//    assign SQMid = ((x > 279) & (y > 200) & (x < 361) & (y < 280)) ? 1 : 0; // Center Square
     
-	// SQ10-17 are also areas within SQ1
-    assign SQ10 = ((x > 100) & (y > 60) &  (x < 181) & (y < 140)) ? 1 : 0; // Green Square
-    assign SQ11 = ((x > 100) & (y > 200) & (x < 181) & (y < 280)) ? 1 : 0; // Green Square
-    assign SQ12 = ((x > 100) & (y > 340) & (x < 181) & (y < 420)) ? 1 : 0; // Green Square
-    assign SQ13 = ((x > 279) & (y > 60 ) & (x < 361) & (y < 140)) ? 1 : 0; // Green Square
-    assign SQ14 = ((x > 279) & (y > 340) & (x < 361) & (y < 420)) ? 1 : 0; // Green Square
-    assign SQ15 = ((x > 459) & (y > 60 ) & (x < 540) & (y < 140)) ? 1 : 0; // Green Square
-    assign SQ16 = ((x > 459) & (y > 200) & (x < 540) & (y < 280)) ? 1 : 0; // Green Square
-    assign SQ17 = ((x > 459) & (y > 340) & (x < 540) & (y < 420)) ? 1 : 0; // Green Square
-    // SQ10hit-17hit are the same areas as SQ10-17
-    assign SQ10hit = ((x > 100) & (y > 60) &  (x < 181) & (y < 140)) ? 1 : 0; // Hit Square
-    assign SQ11hit = ((x > 100) & (y > 200) & (x < 181) & (y < 280)) ? 1 : 0; // Hit Square
-    assign SQ12hit = ((x > 100) & (y > 340) & (x < 181) & (y < 420)) ? 1 : 0; // Hit Square
-    assign SQ13hit = ((x > 279) & (y > 60 ) & (x < 361) & (y < 140)) ? 1 : 0; // Hit Square
-    assign SQ14hit = ((x > 279) & (y > 340) & (x < 361) & (y < 420)) ? 1 : 0; // Hit Square
-    assign SQ15hit = ((x > 459) & (y > 60 ) & (x < 540) & (y < 140)) ? 1 : 0; // Hit Square
-    assign SQ16hit = ((x > 459) & (y > 200) & (x < 540) & (y < 280)) ? 1 : 0; // Hit Square
-    assign SQ17hit = ((x > 459) & (y > 340) & (x < 540) & (y < 420)) ? 1 : 0; // Hit Square
+//	// SQ10-17 are also areas within SQ1
+//    assign SQ10 = ((x > 100) & (y > 60) &  (x < 181) & (y < 140)) ? 1 : 0; // Green Square
+//    assign SQ11 = ((x > 100) & (y > 200) & (x < 181) & (y < 280)) ? 1 : 0; // Green Square
+//    assign SQ12 = ((x > 100) & (y > 340) & (x < 181) & (y < 420)) ? 1 : 0; // Green Square
+//    assign SQ13 = ((x > 279) & (y > 60 ) & (x < 361) & (y < 140)) ? 1 : 0; // Green Square
+//    assign SQ14 = ((x > 279) & (y > 340) & (x < 361) & (y < 420)) ? 1 : 0; // Green Square
+//    assign SQ15 = ((x > 459) & (y > 60 ) & (x < 540) & (y < 140)) ? 1 : 0; // Green Square
+//    assign SQ16 = ((x > 459) & (y > 200) & (x < 540) & (y < 280)) ? 1 : 0; // Green Square
+//    assign SQ17 = ((x > 459) & (y > 340) & (x < 540) & (y < 420)) ? 1 : 0; // Green Square
+//    // SQ10hit-17hit are the same areas as SQ10-17
+//    assign SQ10hit = ((x > 100) & (y > 60) &  (x < 181) & (y < 140)) ? 1 : 0; // Hit Square
+//    assign SQ11hit = ((x > 100) & (y > 200) & (x < 181) & (y < 280)) ? 1 : 0; // Hit Square
+//    assign SQ12hit = ((x > 100) & (y > 340) & (x < 181) & (y < 420)) ? 1 : 0; // Hit Square
+//    assign SQ13hit = ((x > 279) & (y > 60 ) & (x < 361) & (y < 140)) ? 1 : 0; // Hit Square
+//    assign SQ14hit = ((x > 279) & (y > 340) & (x < 361) & (y < 420)) ? 1 : 0; // Hit Square
+//    assign SQ15hit = ((x > 459) & (y > 60 ) & (x < 540) & (y < 140)) ? 1 : 0; // Hit Square
+//    assign SQ16hit = ((x > 459) & (y > 200) & (x < 540) & (y < 280)) ? 1 : 0; // Hit Square
+//    assign SQ17hit = ((x > 459) & (y > 340) & (x < 540) & (y < 420)) ? 1 : 0; // Hit Square
 
     wire H1_0, H1_1, H1_2, H1_3, H1_4, H1_5, H1_6, H2_0, H2_1, H2_2, H2_3, H2_4, H2_5, H2_6, 
         M1_0, M1_1, M1_2, M1_3, M1_4, M1_5, M1_6, M2_0, M2_1, M2_2, M2_3, M2_4, M2_5, M2_6, 
         S1_0, S1_1, S1_2, S1_3, S1_4, S1_5, S1_6, S2_0, S2_1, S2_2, S2_3, S2_4, S2_5, S2_6; 
     wire colonHM_1, colonHM_2, colonMS_1, colonMS_2; //add ms functionality if necessary
     //HOUR 1 DIGIT
-    assign H1_0 = ((x > 74) & (y > 259) & (x < 106) & (y < 276)) ? 1 : 0;
-    assign H1_1 = ((x > 104) & (y > 229) & (x < 121) & (y < 261)) ? 1 : 0;
-    assign H1_2 = ((x > 104) & (y > 199) & (x < 121) & (y < 231)) ? 1 : 0; //READ : I OFFSET x1/y1 VALS BY -1 AND x2/y2 vals by +1 -- to test 
-    assign H1_3 = ((x > 76) & (y > 184) & (x < 106) & (y < 201)) ? 1 : 0; // offset functionality, ONLY the H1 digit will have these
-    assign H1_4 = ((x > 59) & (y > 199) & (x < 76) & (y < 231)) ? 1 : 0; // if it looks good, will -1 for ALL x1/y1 and +1 to ALL x2/y2
-    assign H1_5 = ((x > 59) & (y > 229) & (x < 76) & (y < 261)) ? 1 : 0;
-    assign H1_6 = ((x > 74) & (y > 221) & (x < 106) & (y < 239)) ? 1 : 0; //don't change y-value for #6, or for any of them really. numbers are stacked horizontally, not vertically
+    assign H1_0 = ((x > 75) & (y > 260) & (x < 105) & (y < 275)) ? 1 : 0;
+    assign H1_1 = ((x > 105) & (y > 230) & (x < 120) & (y < 260)) ? 1 : 0;
+    assign H1_2 = ((x > 105) & (y > 200) & (x < 120) & (y < 230)) ? 1 : 0; 
+    assign H1_3 = ((x > 75) & (y > 185) & (x < 105) & (y < 200)) ? 1 : 0; 
+    assign H1_4 = ((x > 60) & (y > 200) & (x < 75) & (y < 230)) ? 1 : 0; 
+    assign H1_5 = ((x > 60) & (y > 230) & (x < 75) & (y < 260)) ? 1 : 0;
+    assign H1_6 = ((x > 75) & (y > 222) & (x < 105) & (y < 238)) ? 1 : 0; //don't change y-value for #6, or for any of them really. numbers are stacked horizontally, not vertically
     //HOUR 2 DIGIT                                                                     
     assign H2_0 = ((x > 150) & (y > 260) & (x < 180) & (y < 275)) ? 1 : 0;
     assign H2_1 = ((x > 180) & (y > 230) & (x < 195) & (y < 260)) ? 1 : 0;
@@ -113,7 +114,7 @@ module top_square(
     assign H2_6 = ((x > 150) & (y > 222) & (x < 180) & (y < 238)) ? 1 : 0;
     //COLON HM DOTS
     assign colonHM_1 = ((x > 225) & (y > 200) & (x < 240) & (y < 215)) ? 1 : 0;
-    assign colonHM_2 = ((x > 225) & (y > 245) & (x < 240) & (y < 275)) ? 1 : 0;
+    assign colonHM_2 = ((x > 225) & (y > 245) & (x < 240) & (y < 260)) ? 1 : 0;
 
     //MINUTE 1 DIGIT
     assign M1_0 = ((x > 285) & (y > 260) & (x < 315) & (y < 275)) ? 1 : 0;
@@ -133,30 +134,30 @@ module top_square(
     assign M2_6 = ((x > 360) & (y > 222) & (x < 390) & (y < 238)) ? 1 : 0;
     //COLON MS DOTS
     assign colonMS_1 = ((x > 435) & (y > 200) & (x < 450) & (y < 215)) ? 1 : 0; //added 210 to CHM x-loc
-    assign colonMS_2 = ((x > 435) & (y > 245) & (x < 450) & (y < 275)) ? 1 : 0;
+    assign colonMS_2 = ((x > 435) & (y > 245) & (x < 450) & (y < 260)) ? 1 : 0;
     
     //SECOND 1 DIGIT
-    assign H1_0 = ((x > 495) & (y > 260) & (x < 525) & (y < 275)) ? 1 : 0;
-    assign H1_1 = ((x > 525) & (y > 230) & (x < 540) & (y < 260)) ? 1 : 0;
-    assign H1_2 = ((x > 525) & (y > 200) & (x < 540) & (y < 230)) ? 1 : 0;
-    assign H1_3 = ((x > 495) & (y > 185) & (x < 525) & (y < 200)) ? 1 : 0; //added 420 to H1 x-loc
-    assign H1_4 = ((x > 480) & (y > 200) & (x < 495) & (y < 230)) ? 1 : 0;
-    assign H1_5 = ((x > 480) & (y > 230) & (x < 495) & (y < 260)) ? 1 : 0;
-    assign H1_6 = ((x > 495) & (y > 222) & (x < 525) & (y < 238)) ? 1 : 0; 
+    assign S1_0 = ((x > 495) & (y > 260) & (x < 525) & (y < 275)) ? 1 : 0;
+    assign S1_1 = ((x > 525) & (y > 230) & (x < 540) & (y < 260)) ? 1 : 0;
+    assign S1_2 = ((x > 525) & (y > 200) & (x < 540) & (y < 230)) ? 1 : 0;
+    assign S1_3 = ((x > 495) & (y > 185) & (x < 525) & (y < 200)) ? 1 : 0; //added 420 to H1 x-loc
+    assign S1_4 = ((x > 480) & (y > 200) & (x < 495) & (y < 230)) ? 1 : 0;
+    assign S1_5 = ((x > 480) & (y > 230) & (x < 495) & (y < 260)) ? 1 : 0;
+    assign S1_6 = ((x > 495) & (y > 222) & (x < 525) & (y < 238)) ? 1 : 0; 
     //SECOND 2 DIGIT                                                                     
-    assign H2_0 = ((x > 570) & (y > 260) & (x < 600) & (y < 275)) ? 1 : 0;
-    assign H2_1 = ((x > 600) & (y > 230) & (x < 615) & (y < 260)) ? 1 : 0;
-    assign H2_2 = ((x > 600) & (y > 200) & (x < 615) & (y < 230)) ? 1 : 0;
-    assign H2_3 = ((x > 570) & (y > 185) & (x < 600) & (y < 200)) ? 1 : 0; //added 75 to S1 x-locations
-    assign H2_4 = ((x > 555) & (y > 200) & (x < 570) & (y < 230)) ? 1 : 0;
-    assign H2_5 = ((x > 555) & (y > 230) & (x < 570) & (y < 260)) ? 1 : 0;
-    assign H2_6 = ((x > 570) & (y > 222) & (x < 600) & (y < 238)) ? 1 : 0;
+    assign S2_0 = ((x > 570) & (y > 260) & (x < 600) & (y < 275)) ? 1 : 0;
+    assign S2_1 = ((x > 600) & (y > 230) & (x < 615) & (y < 260)) ? 1 : 0;
+    assign S2_2 = ((x > 600) & (y > 200) & (x < 615) & (y < 230)) ? 1 : 0;
+    assign S2_3 = ((x > 570) & (y > 185) & (x < 600) & (y < 200)) ? 1 : 0; //added 75 to S1 x-locations
+    assign S2_4 = ((x > 555) & (y > 200) & (x < 570) & (y < 230)) ? 1 : 0;
+    assign S2_5 = ((x > 555) & (y > 230) & (x < 570) & (y < 260)) ? 1 : 0;
+    assign S2_6 = ((x > 570) & (y > 222) & (x < 600) & (y < 238)) ? 1 : 0;
 
 
  // Assign the registers to the VGA 3rd output. This will display strong red on the Screen when 
  // grid = 1, and strong green on the screen when green = 1;
- assign VGA_R[3] = grid;
- assign VGA_G[3] = green;                    //WORK ON IMPLEMENTING RANDOM_NUM AND HIT FOR EACH 7SEG DISPLAY NEXT
+ assign VGA_B[3] = grid;
+ assign VGA_G[3] = grid;                    //WORK ON IMPLEMENTING RANDOM_NUM AND HIT FOR EACH 7SEG DISPLAY NEXT
   
   always @ (*)
   begin 
@@ -165,85 +166,85 @@ module top_square(
 	//Green = 0 means that there will be no values of x/y on the VGA that will display green
     green = 0;
 	//This statement makes it so that within SQ1, a 3x3 grid of squares appears, with the middle square blacked out
-    grid =  SQ1 - SQ2 - SQ3 - SQ4 - SQ5 - SQ6 - SQ7 - SQ8 - SQ9 - SQMid;
+    grid = SQ1 + H1_0+H1_1+H1_2+H1_3+H1_4+H1_5+H1_6+H2_0+H2_1+H2_2+H2_3+H2_4+H2_5+H2_6+M1_0+M1_1+M1_2+M1_3+M1_4+M1_5+M1_6+M2_0+M2_1+M2_2+M2_3+M2_4+M2_5+M2_6+S1_0+S1_1+S1_2+S1_3+S1_4+S1_5+S1_6+S2_0+S2_1+S2_2+S2_3+S2_4+S2_5+S2_6+colonHM_1+colonHM_2+colonMS_1+colonMS_2;
     
-    if(random_num[0] == 1)
-        begin
-			//Add SQ10 to the areas which will display strong green.
-			//Note: This displays yellow on the display, as red+green = yellow.
-            green = green + SQ10; 
-        end
-    else if(random_num[0] == 0 && hit[0]==1)
-        begin
-			//Add SQ10 to the areas which will display strong green, and remove it from the area that displays 
-			//strong red.
-            green = green + SQ10;
-            grid = grid - SQ10hit;
-        end   
-    if(random_num[1] == 1)
-        begin
-            green = green + SQ11;
-        end
-    else if(random_num[1] == 0 && hit[1]==1)
-        begin
-            green = green + SQ11;
-            grid = grid - SQ11hit;
-        end        
-    if(random_num[2] == 1)
-        begin
-            green = green + SQ12;
-        end
-    else if(random_num[2] == 0 && hit[2]==1)
-        begin
-            green = green + SQ12;
-            grid = grid - SQ12hit;
-        end 
-    if(random_num[3] == 1)
-        begin
-            green = green + SQ13;
-        end
-    else if(random_num[3] == 0 && hit[3]==1)
-        begin
-            green = green + SQ13;
-            grid = grid - SQ13hit;
-        end 
-    if(random_num[4] == 1)
-        begin
-            green = green + SQ14;
-        end
-    else if(random_num[4] == 0 && hit[4]==1)
-        begin
-            green = green + SQ14;
-            grid = grid - SQ14hit;
-        end 
-    if(random_num[5] == 1)
-        begin
-            green = green + SQ15;
-        end
-    else if(random_num[5] == 0 && hit[5]==1)
-        begin
-            green = green + SQ15;
-            grid = grid - SQ15hit;
-        end 
-    if(random_num[6] == 1)
-        begin
-            green = green + SQ16;
-        end
-    else if(random_num[6] == 0 && hit[6]==1)
-        begin
-            green = green + SQ16;
-            grid = grid - SQ16hit;
-        end 
-    if(random_num[7] == 1)
-        begin
-            green = green + SQ17;
-        end
-    else if(random_num[7] == 0 && hit[7]==1)
-        begin
-            green = green + SQ17;
-            grid = grid - SQ17hit;
-        end 
-  end
+//    if(random_num[0] == 1)
+//        begin
+//			//Add SQ10 to the areas which will display strong green.
+//			//Note: This displays yellow on the display, as red+green = yellow.
+//            green = green + SQ10; 
+//        end
+//    else if(random_num[0] == 0 && hit[0]==1)
+//        begin
+//			//Add SQ10 to the areas which will display strong green, and remove it from the area that displays 
+//			//strong red.
+//            green = green + SQ10;
+//            grid = grid - SQ10hit;
+//        end   
+//    if(random_num[1] == 1)
+//        begin
+//            green = green + SQ11;
+//        end
+//    else if(random_num[1] == 0 && hit[1]==1)
+//        begin
+//            green = green + SQ11;
+//            grid = grid - SQ11hit;
+//        end        
+//    if(random_num[2] == 1)
+//        begin
+//            green = green + SQ12;
+//        end
+//    else if(random_num[2] == 0 && hit[2]==1)
+//        begin
+//            green = green + SQ12;
+//            grid = grid - SQ12hit;
+//        end 
+//    if(random_num[3] == 1)
+//        begin
+//            green = green + SQ13;
+//        end
+//    else if(random_num[3] == 0 && hit[3]==1)
+//        begin
+//            green = green + SQ13;
+//            grid = grid - SQ13hit;
+//        end 
+//    if(random_num[4] == 1)
+//        begin
+//            green = green + SQ14;
+//        end
+//    else if(random_num[4] == 0 && hit[4]==1)
+//        begin
+//            green = green + SQ14;
+//            grid = grid - SQ14hit;
+//        end 
+//    if(random_num[5] == 1)
+//        begin
+//            green = green + SQ15;
+//        end
+//    else if(random_num[5] == 0 && hit[5]==1)
+//        begin
+//            green = green + SQ15;
+//            grid = grid - SQ15hit;
+//        end 
+//    if(random_num[6] == 1)
+//        begin
+//            green = green + SQ16;
+//        end
+//    else if(random_num[6] == 0 && hit[6]==1)
+//        begin
+//            green = green + SQ16;
+//            grid = grid - SQ16hit;
+//        end 
+//    if(random_num[7] == 1)
+//        begin
+//            green = green + SQ17;
+//        end
+//    else if(random_num[7] == 0 && hit[7]==1)
+//        begin
+//            green = green + SQ17;
+//            grid = grid - SQ17hit;
+//        end 
+    end
     
     
 endmodule
