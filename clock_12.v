@@ -43,26 +43,25 @@ reg A_P_int;
 
 always @(posedge clk or negedge reset) begin
     if (!reset) begin
-        hours_int <= 0;
+        hours_int <= 1;
         mins_int <= 0;
         secs_int <= 0;
         A_P_int <= 0;
     end else if (start) begin
-        hours_int <= hours_i;
+        hours_int <= hours_i + 1;
         mins_int <= mins_i;
         secs_int <= secs_i;
         A_P_int <= secs_i;
     end else begin
         secs_int <= secs_int + 1;
-        if (secs_int == 59) begin //changed to 59 as a simple, quick fix. won't necessarily work with button presses but works on display
+        if (secs_int == 59) begin
             secs_int <= 0;
             mins_int <= mins_int + 1;
-            if (mins_int == 59) begin //changed to 59 as a simple, quick fix. won't necessarily work with button presses but works on display
+            if (mins_int == 59) begin
                 mins_int <= 0;
                 hours_int <= hours_int + 1;
-                if (hours_int == 12) begin //didn't change this to 11. most likely need to. will explain bugs in person when i can
-                    hours_int <= 0;
-                    A_P_int <= ~A_P_int;
+                if (hours_int == 12) begin 
+                    hours_int <= 1;
                 end
             end
         end

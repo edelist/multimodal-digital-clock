@@ -24,12 +24,12 @@ module AP_output(mode, AP_i, reset, AP_o);
 
     input [1:0]mode;
     input reset, AP_i;
-    output reg AP_o;
+    output reg [6:0]AP_o;
     
     always@(mode) begin
-        if (!reset)
-            AP_o <= 1'bZ;
-        else if (mode == 2'b00)
+        if (mode == 2'b01)
             AP_o <= AP_i;
+        else
+            AP_o <= 7'b1111111;
     end
 endmodule

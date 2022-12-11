@@ -63,18 +63,17 @@ module top(start, mode, clk, reset, hours_i, mins_i, secs_i, A_P_i, VGA_HS_O, VG
     wire [5:0]set_hours12;
     wire [5:0]set_mins12;
     wire [5:0]set_secs12;
-    wire [1:0]set_AP12;
+    wire set_AP12;
     
     //internal FROM MODULE
     wire [5:0]hours_12;
     wire [5:0]mins_12;
     wire [5:0]secs_12;
-    wire [1:0]A_P_12;
+    wire A_P_12;
     
     wire [5:0]hours_24;
     wire [5:0]mins_24;
     wire [5:0]secs_24;
-    wire [1:0]A_P_24;
     
     wire [5:0]hours_stop;
     wire [5:0]mins_stop;
@@ -92,7 +91,7 @@ module top(start, mode, clk, reset, hours_i, mins_i, secs_i, A_P_i, VGA_HS_O, VG
     //digits
     wire [5:0] hours1, hours2, mins1, mins2, secs1, secs2;
     
-    wire [1:0]AP_out;
+    wire [6:0]AP_out;
     
         
     //divide clock to 1Hz
@@ -110,13 +109,13 @@ module top(start, mode, clk, reset, hours_i, mins_i, secs_i, A_P_i, VGA_HS_O, VG
     
     //set times for all modules
     set_time24 set_time24(.hours_i(count_hours_o), .mins_i(count_mins_o), .secs_i(count_secs_o), .hours_o(set_hours24), .mins_o(set_mins24), .secs_o(set_secs24));
-    set_time12 set_time12(.hours_i(count_hours_o), .mins_i(count_mins_o), .secs_i(count_secs_o), .A_P_i(A_P_i), .hours_o(set_hours24), .mins_o(set_mins24), .secs_o(set_secs24), .A_P_o(set_AP12));
+    set_time12 set_time12(.hours_i(count_hours_o), .mins_i(count_mins_o), .secs_i(count_secs_o), .A_P_i(A_P_i), .hours_o(set_hours12), .mins_o(set_mins12), .secs_o(set_secs12), .A_P_o(set_AP12));
     
     //instantiate all modules
     clock12 clock12(.start(start), .reset(reset), .clk(clk_1sec), .hours_i(set_hours12), .mins_i(set_mins12), .secs_i(set_secs12), .A_P_i(set_AP12), .hours_o(hours_12), .mins_o(mins_12), .secs_o(secs_12), .A_P_o(A_P_12));
     clock24 clock24(.start(start), .reset(reset), .clk(clk_1sec), .hours_i(set_hours24), .mins_i(set_mins24), .secs_i(set_secs24), .hours_o(hours_24), .mins_o(mins_24), .secs_o(secs_24));
     stopwatch stopwatch(.reset(reset), .start(start), .clk(clk_1sec), .hours_o(hours_stop), .mins_o(mins_stop), .secs_o(secs_stop));
-    timer timer(.start(start), .reset(reset), .clk(clk_1sec), .hours_i(set_hours24), .mins_i(set_mins24), .secs_i(set_mins24), .hours_o(hours_timer), .mins_o(mins_timer), .secs_o(secs_timer));
+    timer timer(.start(start), .reset(reset), .clk(clk_1sec), .hours_i(set_hours24), .mins_i(set_mins24), .secs_i(set_secs24), .hours_o(hours_timer), .mins_o(mins_timer), .secs_o(secs_timer));
     
     //hours MUX
     always@(mode) begin

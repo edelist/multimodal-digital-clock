@@ -34,7 +34,7 @@ always @(posedge clk or negedge reset) begin
         hours_o <= 0;
         mins_o <= 0;
         secs_o <= 0;
-    end else if (start) begin
+    end else if (start) begin    
         secs_o <= secs_o + 1;
         if (secs_o == 60) begin
             secs_o <= 0;

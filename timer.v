@@ -51,20 +51,22 @@ always @(posedge clk or negedge reset) begin
         hours_int <= hours_i;
         mins_int <= mins_i;
         secs_int <= secs_i;
-    end else begin
-        if((secs_int == 0) && (mins_int == 0) && (hours_int == 0)) begin
-            #1000;
-        end
+    end else if (hours_int == 0 && mins_int == 0 && secs_int == 0) begin
+        hours_int <= 0;
+        mins_int <= 0;
+        secs_int <= 0;
+        
+    end else begin   
         if(secs_int == 0) begin
             secs_int <= 59;
             if(mins_int == 0) begin
                 mins_int <= 59;
                 hours_int <= hours_int - 1;
             end else begin
-            mins_int <= mins_int - 1'b1; 
+            mins_int <= mins_int - 1; 
             end
-    end
-    secs_int <= secs_int - 1;
+         end else begin
+    secs_int <= secs_int - 1; end
     end
  end // always
  

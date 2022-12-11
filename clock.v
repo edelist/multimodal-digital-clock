@@ -47,13 +47,13 @@ always @(posedge clk or negedge reset) begin
         secs_int <= secs_i;
     end else begin
         secs_int <= secs_int + 1;
-        if (secs_int == 59) begin //changed to 59 as a simple, quick fix. won't necessarily work with button presses but works on display
+        if (secs_int == 59) begin
             secs_int <= 0;
             mins_int <= mins_int + 1;
-            if (mins_int == 59) begin //changed to 59 as a simple, quick fix. won't necessarily work with button presses but works on display
+            if (mins_int == 59) begin
                 mins_int <= 0;
                 hours_int <= hours_int + 1;
-                if (hours_int == 24) begin //didn't change this to 23. most likely need to. will explain bugs in person when i can
+                if (hours_int == 23) begin
                     hours_int <= 0;
                 end
             end

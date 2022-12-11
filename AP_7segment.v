@@ -21,18 +21,19 @@
 
 
 module AP_7segment(AP_i, reset, AP_o);
-    input AP_i, reset;
-    output reg AP_o;
+    input [6:0]AP_i;
+    input reset;
+    output reg [6:0]AP_o;
 
     always @(*) begin
         if (!reset)
             AP_o <= 7'b1111111; // BLANK
-        else
+        else begin
             case (AP_i)
-                0: AP_o <= 7'b0001000; // "A"
-                1: AP_o <= 7'b0011000; // "P"
-//                Z: AP_o <= 7'b1111111;             no work bien :(((((((((((
+                7'b0000000: AP_o <= 7'b0001000; // "A"
+                7'b0000001: AP_o <= 7'b0011000; // "P"
                 default: AP_o <= 7'b1111111; // BLANK
             endcase
+            end
         end
 endmodule
